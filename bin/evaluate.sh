@@ -11,7 +11,7 @@ fi
 rm -f tmp$$
 to=$1; shift	# get parameters
 for i in `seq 1 10`; do
-    random.awk `echo 2^$to | bc` > data
+    ./random.awk `echo 2^$to | bc` > data
     for j in `seq 12 $to`; do
         N=`echo 2^$j | bc`; echo "$i:$j" | tee -a tmp$$
         java -cp .:commons-math3-3.5.jar:te-common.jar \

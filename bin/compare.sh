@@ -15,7 +15,7 @@ fi
 
 ./evaluate.sh $*
 OUT=tmp.evaluate.sh
-expand -t `col.awk $OUT` $OUT >> $0
+expand -t `./col.awk $OUT` $OUT >> $0
 exit
 @
 Fri Dec  4 00:32:28 UTC 2015
