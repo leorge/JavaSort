@@ -14,13 +14,12 @@ for i in `seq 1 10`; do
     ./random.awk `echo 2^$to | bc` > data
     for j in `seq 12 $to`; do
         N=`echo 2^$j | bc`; echo "$i:$j" | tee -a tmp$$
-        java -cp .:commons-math3-3.5.jar:te-common.jar \
-        com.github.leorge.sort.JavaSort -N $N $* data | tee -a tmp$$
+        ./run -N $N $* ../data | tee -a tmp$$
     done;
 done
 echo ""
 
-OUT=tmp.`basename $0`
+OUT=../tmp.`basename $0`
 awk -f - tmp$$ <<'EOF' | tee $OUT
 BEGIN {OFS = "\t"}
 NF==1 {
