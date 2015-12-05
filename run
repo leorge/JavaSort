@@ -1,0 +1,4 @@
+#!/bin/bash
+pushd bin
+java -cp .:commons-math3-3.5.jar:te-common.jar com.github.leorge.sort.JavaSort $*
+popd
