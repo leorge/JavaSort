@@ -90,7 +90,7 @@ is
 [ComparableTimSort](http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/7u40-b43/java/util/ComparableTimSort.java#ComparableTimSort.sort%28java.lang.Object%5B%5D%29).
 [TimSort](https://en.wikipedia.org/wiki/Timsort) is a hybrid sort of merge sort and insertion sort,
 invented by Tim Peters:
-the number of copies in merge sort is about 2 times of it in quicksort as below.
+the number of copies in merge sort is about 2 times of quicksort as below.
 The following list exhibits numbers of times in my another
 [C project](https://github.com/leorge/qmisort/wiki/Hybrid-sort).
 
