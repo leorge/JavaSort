@@ -1,6 +1,4 @@
 # JavaSort
-Implemented Quicksort in QMIsort project.
-Welcome to the JavaSort wiki!
 
 This project is based on my another
 [project](https://github.com/leorge/qmisort)
