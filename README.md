@@ -4,6 +4,8 @@ This project is based on my another
 [project](https://github.com/leorge/qmisort)
 in C language.
 
+I improved quicksort faster than java.util.Arrays.sort(Object [ ]).
+
 If you have installed eclipse,
 change current directory to your workspace.
 
