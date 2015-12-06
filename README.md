@@ -29,9 +29,9 @@ This project needs 2 jar files.
 to calculate statistics.
 1. [Command line parser](http://te-code.sourceforge.net/).
 
-Extract **commons-math3-3.5.jar** in the
+Extract **commons-math3-3.5.jar** in
 [commons-math3-3.5-bin.tar.gz](http://www.us.apache.org/dist//commons/math/binaries/commons-math3-3.5-bin.tar.gz)
-and **te-common.jar** in the
+and **te-common.jar** in
 [te-common-3.0.0-pre3.zip](http://sourceforge.net/projects/te-code/files/latest/download?source=files)
 to bin/ sub-directory.  
 
