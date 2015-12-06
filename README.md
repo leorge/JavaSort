@@ -79,7 +79,7 @@ The test repeats until the percentage becomes 2% or less.
 
 The following chart exhibits the relative performances of the algorithms.
 Y axis is normalized ***elapsed time* / *n*log(*n*)**,
-where the elapsed time of quick_hole() at N=2^20=1M is 1.
+where the elapsed time of QuickHole at N=2^20=1M is 1.
 
 ![performance](https://github.com/leorge/JavaSort/blob/master/performance.png)  
 > [data](https://github.com/leorge/JavaSort/blob/master/compare.sh)
