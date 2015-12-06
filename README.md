@@ -6,7 +6,7 @@ This project is based on my another
 [project](https://github.com/leorge/qmisort)
 in C language.
 
-If you have installed eclipse,
+If you have eclipse,
 change current directory to your workspace.
 
     $ cd  <work space>
