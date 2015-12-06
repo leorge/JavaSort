@@ -68,7 +68,7 @@ is the simplest prototype of quicksort algorithm with
 chooses a pivot at the middle of array when N \< 9(=3\*3),
 median of 3 elements when N \< 32(=2^5) else median of 5 using random numbers,
 where N is the number of elements.  
-The 4th field is mean of 10 elapsed time of 12 data.
+The 4th field is mean of 10 elapsed time in 12 data.
 The first data enclosed in square bracket is omitted because every time large.
 This is a systematic error.
 And the largest data in 11 data, enclosed in parentheses, is also omitted because sometime it is large.
