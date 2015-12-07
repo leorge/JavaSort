@@ -6,7 +6,7 @@ import java.util.Random;
 public class QuickRandom implements Algorithm {
     
     private static Random rnd = new Random(System.currentTimeMillis() + System.nanoTime());
-    private static final String myName = "QuickMedian";
+    private static final String myName = "QuickRandom";
 
     @Override
     public String name() {
@@ -16,7 +16,7 @@ public class QuickRandom implements Algorithm {
 
     @Override
     public String description() {
-        return "quicksort median of elements";
+        return "quicksort median of random elements";
     }
 
     @Override
