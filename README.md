@@ -76,7 +76,7 @@ The 7th filed is standard deviation (STDEV) of 10 data.
 The 8th field is percentage of STDEV: 100 \* Stdev / Mean.
 The test repeats until the percentage becomes 5% or less in this case.
 
-The following chart exhibits the relative performances of the algorithms.
+The following chart exhibits the relative performances of these algorithms.
 Y axis is normalized ***elapsed time* / *n*log(*n*)**,
 where the elapsed time of QuickHole at N=2^20=1M is 1.
 
