@@ -2,38 +2,6 @@
 
 I'm improving quicksort faster than java.util.Arrays.sort(Object [ ]).
 
-This project is based on my another
-[project](https://github.com/leorge/qmisort)
-in C language.
-
-If you have eclipse,
-change current directory to your workspace.
-
-    $ cd  <work space>
-
-Download this project.  
-
-    $ git clone https://github.com/leorge/JavaSort
-    $ cd JavaSort
-If you don't want to install **git**,
-click **Download ZIP** button at the upper right in this page.
-However, I recommend you to install git
-because it is easy in this site to update files by the following command.  
-
-    $ git pull
-
-This project needs 2 jar files.
-
-1. [Apache Commons Math 3](https://commons.apache.org/math/download_math.cgi)
-to calculate statistics.
-1. [Command line parser](http://te-code.sourceforge.net/).
-
-Extract **commons-math3-3.5.jar** in
-[commons-math3-3.5-bin.tar.gz](http://www.us.apache.org/dist//commons/math/binaries/commons-math3-3.5-bin.tar.gz)
-and **te-common.jar** in
-[te-common-3.0.0-pre3.zip](http://sourceforge.net/projects/te-code/files/latest/download?source=files)
-to bin/ sub-directory.  
-
 The following is a sample of test.
 
     $ ./random.awk 12 | xargs echo     # sample of output
