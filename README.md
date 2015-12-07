@@ -16,8 +16,7 @@ Download this project.
     $ git clone https://github.com/leorge/JavaSort
     $ cd JavaSort
 If you don't want to install **git**,
-click **<> code** button on the top tab in this page,
-and click **Download ZIP** button at the right of the page.
+click **Download ZIP** button at the top and right of the page.
 However, I recommend you to install git
 because it is easy in this site to update files by the following command.  
 
