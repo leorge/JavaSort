@@ -99,11 +99,11 @@ The following list exhibits numbers of times in my another
     merge_sort()   usec = 4716 call = 9999  compare = 120417 copy = 130416
     quick_random() usec = 4648 call = 6247  compare = 139147 copy = 73943
     quick_hybrid() usec = 4602 call = 10000 compare = 120447 copy = 15032
-The number copy copies in merge_sort() is added number of comparisons and calls
+The number of copies in merge_sort() is added number of comparisons and calls
 because every comparisons bring about coping and when a sub-array empties another sub-array is merged.
 On the contrary, probability of copies after comparisons is 0.5 in quicksort.
-The number of copies in quick_hybrid() is the least because it calls **indirect** merge sort.
-The number of copies in
+The number of copies in quick_hybrid() is the least because it calls **indirect** merge sort,
+because the number of copies in
 [indirect sort](https://github.com/leorge/qmisort/wiki/Indirect-sort)
 is nearly N.
 
