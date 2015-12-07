@@ -1,6 +1,6 @@
 # JavaSort
 
-I improved quicksort faster than java.util.Arrays.sort(Object [ ]).
+I'm improving quicksort faster than java.util.Arrays.sort(Object [ ]).
 
 This project is based on my another
 [project](https://github.com/leorge/qmisort)
@@ -18,8 +18,8 @@ Download this project.
 If you don't want to install **git**,
 click **<> code** button on the top tab in this page,
 and click **Download ZIP** button at the right of the page.
-However, I recommend to install git
-because it is easy to update files by the following command.  
+However, I recommend you to install git
+because it is easy in this site to update files by the following command.  
 
     $ git pull
 
@@ -49,11 +49,11 @@ The following list exhibits a sample of test.
 xargs : linux command to build and execute command lines from standard input  
 echo : linux command to  display a line of text  
 [run](https://github.com/leorge/JavaSort/blob/master/run)
-: shell script to launch a test program to sort String[ ].  
+: shell script to launch a test program.  
 -T 10 : Standard deviation is 10% to pass the **T**est.
 Default is 2%.  
 
-If you took a long time to complete a test,
+If you took a long time to complete the test,
 retry the test on the CUI console
 launched by Ctrl+Alt+F1-F6 keys after GUI logout.
 Press Ctrl+Alt+F7 to return to GUI login screen.  
