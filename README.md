@@ -34,7 +34,7 @@ and **te-common.jar** in
 [te-common-3.0.0-pre3.zip](http://sourceforge.net/projects/te-code/files/latest/download?source=files)
 to bin/ sub-directory.  
 
-The following list exhibits a sample of test.
+The following is a sample of test.
 
     $ ./random.awk 12 | xargs echo     # sample of output
     10 03 08 07 05 11 03 04 11 06 08 00
