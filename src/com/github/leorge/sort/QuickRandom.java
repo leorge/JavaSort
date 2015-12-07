@@ -3,7 +3,7 @@ package com.github.leorge.sort;
 import java.util.Random;
 
 /* Hybrid sort of quicksort and simple insertion sort */
-public class QuickMedian implements Algorithm {
+public class QuickRandom implements Algorithm {
     
     private static Random rnd = new Random(System.currentTimeMillis() + System.nanoTime());
     private static final String myName = "QuickMedian";
@@ -89,7 +89,7 @@ public class QuickMedian implements Algorithm {
      * @param args filename
      */
     public static void main(String[] args) {
-        QuickMedian obj = new QuickMedian();
+        QuickRandom obj = new QuickRandom();
         JavaSort.test(obj, args[0]);
     }
 }

@@ -95,7 +95,7 @@ public class JavaSort {
         Map<String, Algorithm> programs = new HashMap<String, Algorithm>();
         programs.put("l", new QsortLib());
         programs.put("h", new QuickHole());
-        programs.put("m", new QuickMedian());
+        programs.put("r", new QuickRandom());
         
         String postAmble = "Algorithm:\n";
         for (String key : programs.keySet()) {
