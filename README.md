@@ -75,7 +75,7 @@ And the largest data in 11 data, enclosed in parentheses, is also omitted becaus
 This is a possible error that may caused by randomness or interrupt handlers.  
 The 7th filed is standard deviation (STDEV) of 10 data.  
 The 8th field is percentage of STDEV: 100 \* Stdev / Mean.
-The test repeats until the percentage becomes 2% or less.
+The test repeats until the percentage becomes 5% or less in this case.
 
 The following chart exhibits the relative performances of the algorithms.
 Y axis is normalized ***elapsed time* / *n*log(*n*)**,
@@ -107,3 +107,7 @@ The number of copies in quick_hybrid() is the least because it calls **indirect*
 The number of copies in
 [indirect sort](https://github.com/leorge/qmisort/wiki/Indirect-sort)
 is nearly N.
+
+Next theme is security,
+and the final theme is parallelization.
+However, I return to C project to complete it.
