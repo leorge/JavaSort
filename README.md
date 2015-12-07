@@ -33,7 +33,7 @@ is the simplest prototype of quicksort algorithm with
 [hole instead of swaps](https://github.com/leorge/qmisort/wiki/Hole-instead-of-swaps).
 [**QuickMedian**](https://github.com/leorge/JavaSort/blob/master/src/com/github/leorge/sort/QuickMedian.java)
 chooses a pivot at the middle of array when N \< 9(=3\*3),
-median of 3 elements when N \< 32(=2^5) else median of 5 using random numbers,
+median of 3 elements when N \< 32(=2^5) else median of 5 elements with random numbers,
 where N is the number of elements.  
 The 4th field is mean of 10 elapsed time in 12 data.
 The first data enclosed in square bracket is omitted because every time large.
