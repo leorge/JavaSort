@@ -8,19 +8,20 @@ if [ $# -lt 2 ]; then
     exit
 fi
 
-rm -f tmp$$
+OUT=tmp.`basename $0`
+rm -f $OUT
 to=$1; shift	# get parameters
 for i in `seq 1 10`; do
     ./random.awk `echo 2^$to | bc` > data
     for j in `seq 12 $to`; do
-        N=`echo 2^$j | bc`; echo "$i:$j" | tee -a tmp$$
-        ./run -N $N $* ../data | tee -a tmp$$
+        N=`echo 2^$j | bc`; echo "$i:$j" | tee -a $OUT > /dev/stderr
+        ./run -N $N $* ../data | tee -a $OUT > /dev/stderr
     done;
+    rm data
 done
 echo ""
 
-OUT=../tmp.`basename $0`
-awk -f - tmp$$ <<'EOF' | tee $OUT
+awk -f - $OUT <<'EOF'
 BEGIN {OFS = "\t"}
 NF==1 {
     split($1, info, ":")
@@ -57,5 +58,3 @@ END {
     }
 }
 EOF
-
-rm  tmp$$
