@@ -70,11 +70,11 @@ The following list exhibits numbers of times in my another
 The number of copies in merge_sort() is added number of comparisons and calls
 because every comparisons bring about coping and when a sub-array empties another sub-array is merged.
 On the contrary, probability of copies after comparisons is 0.5 in quicksort.
-The number of copies in quick_hybrid() is the least because it calls **indirect** merge sort,
-because the number of copies in
+The number of copies in quick_hybrid() is the least that calls **indirect** merge sort.
+The number of copies in
 [indirect sort](https://github.com/leorge/qmisort/wiki/Indirect-sort)
 is nearly N.
 
 Next theme is security,
 and the final theme is parallelization.
-However, I return to C project to complete it.
+However, I return to C project to complete.
