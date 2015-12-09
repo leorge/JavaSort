@@ -3,6 +3,8 @@
 I'm improving quicksort faster than java.util.Arrays.sort(Object [ ]).
 
 The following is a sample of test.
+If you want to do this test, visit my
+[wiki apge](https://github.com/leorge/JavaSort/wiki).
 
     $ ./random.awk 12 | xargs echo     # sample of output
     10 03 08 07 05 11 03 04 11 06 08 00
