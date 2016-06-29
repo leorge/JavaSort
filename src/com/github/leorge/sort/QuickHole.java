@@ -1,8 +1,6 @@
 package com.github.leorge.sort;
 
-//import java.util.Random;
-
-/* Hybrid sort of quicksort and simple insertion sort */
+/* The simplest new quicksort with a pivot hole */
 public class QuickHole implements Algorithm {
     
     private static final String myName = "QuickHole";
@@ -23,32 +21,24 @@ public class QuickHole implements Algorithm {
         sort(a, 0, a.length - 1);
     }
     
-    public void sort(Object[] a, int lo, int hi) {
-        sort(a, lo, hi, 0);
-    }
-
-    private void sort(Object[] a, int lo, int hi, int depth) {
+    private void sort(Object[] a, int lo, int hi) {
         if (lo < hi) {
             @SuppressWarnings("unchecked")
             Comparable<Object> pivot = (Comparable<Object>) a[hi];
-            int lt = lo, gt = hi, eq = lo - 1, hole = gt--;
+            int lt = lo, gt = hi, hole = gt--;
             for (; lt < hole; lt++) {
-                if (pivot.compareTo(a[lt]) <= 0) {
+                if (pivot.compareTo(a[lt]) < 0) {
                     a[hole] = a[lt]; hole = lt;
                     for (; gt > hole; gt--) {
-                        int chk = pivot.compareTo(a[gt]);
-                        if (chk > 0) {
+                        if (pivot.compareTo(a[gt]) > 0) {
                             a[hole] = a[gt]; hole = gt;
-                            eq = lo - 1;
                         }
-                        else if (chk < 0) eq = lo - 1;  // clear
-                        else if (eq < lo) eq = gt;      // chk == 0 i.e. a[hole] == pivot
                     }
                 }
             }
             a[hole] = pivot;    // restore the pivot
-            sort(a, lo, hole - 1, depth);
-            sort(a, (eq < lo ? hole : eq) + 1, hi, depth);
+            sort(a, lo, hole - 1);
+            sort(a, hole + 1, hi);
         }
     }
     
