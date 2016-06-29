@@ -1,6 +1,6 @@
 package com.github.leorge.sort;
 
-import java.util.Random;
+//import java.util.Random;
 
 /* Hybrid sort of quicksort and simple insertion sort */
 public class QuickHole implements Algorithm {
