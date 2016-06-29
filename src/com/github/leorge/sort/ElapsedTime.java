@@ -4,7 +4,8 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 // https://commons.apache.org/proper/commons-math/
-import org.apache.commons.math3.stat.descriptive.SynchronizedSummaryStatistics;
+//import org.apache.commons.math3.stat.descriptive.SynchronizedSummaryStatistics;	// 3.5
+import org.apache.commons.math3.stat.descriptive.*;		// 3.6
 
 public class ElapsedTime {
     
