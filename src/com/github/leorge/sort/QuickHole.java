@@ -29,8 +29,8 @@ public class QuickHole implements Algorithm {
 
     private void sort(Object[] a, int lo, int hi, int depth) {
         if (lo < hi) {
-//            @SuppressWarnings("unchecked")
-            Comparable<Object> pivot = (Comparable) a[hi];
+            @SuppressWarnings("unchecked")
+            Comparable<Object> pivot = (Comparable<Object>) a[hi];
             int lt = lo, gt = hi, eq = lo - 1, hole = gt--;
             for (; lt < hole; lt++) {
                 if (pivot.compareTo(a[lt]) <= 0) {

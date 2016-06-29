@@ -4,7 +4,7 @@ import java.util.Random;
 
 /* Hybrid sort of quicksort and simple insertion sort */
 public class QuickPivot implements Algorithm {
-    
+
     private static Random rnd = new Random(System.currentTimeMillis() + System.nanoTime());
     private static final String myName = "QuickPivot";
 
@@ -62,7 +62,7 @@ public class QuickPivot implements Algorithm {
             }
 
             @SuppressWarnings("unchecked")
-            Comparable<Object> pivot = (Comparable) a[median];
+            Comparable<Object> pivot = (Comparable<Object>) a[median];
             int lt = lo, gt = hi, eq = lo - 1, hole;
             a[median] = a[hole = gt--];
             for (; lt < hole; lt++) {
