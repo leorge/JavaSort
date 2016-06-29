@@ -3,10 +3,10 @@ package com.github.leorge.sort;
 import java.util.Random;
 
 /* Hybrid sort of quicksort and simple insertion sort */
-public class QuickRandom implements Algorithm {
+public class QuickPivot implements Algorithm {
     
     private static Random rnd = new Random(System.currentTimeMillis() + System.nanoTime());
-    private static final String myName = "QuickRandom";
+    private static final String myName = "QuickPivot";
 
     @Override
     public String name() {
@@ -89,7 +89,7 @@ public class QuickRandom implements Algorithm {
      * @param args filename
      */
     public static void main(String[] args) {
-        QuickRandom obj = new QuickRandom();
+        QuickPivot obj = new QuickPivot();
         JavaSort.test(obj, args[0]);
     }
 }
