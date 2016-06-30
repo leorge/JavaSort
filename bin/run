@@ -1,1 +1,0 @@
-java -cp .:`echo *.jar|sed 's/ /:/g'` com.github.leorge.sort.JavaSort $*
