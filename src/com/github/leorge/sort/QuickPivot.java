@@ -24,64 +24,52 @@ public class QuickPivot implements Algorithm {
         sort(a, 0, a.length - 1);
     }
     
-    public void sort(Object[] a, int lo, int hi) {
-        sort(a, lo, hi, 0);
-    }
-
-    private void sort(Object[] a, int lo, int hi, int depth) {
+    private void sort(Object[] a, int lo, int hi) {
         if (lo < hi) {
             int N = hi - lo + 1;
-            int distance, lower, middle, higher, median;
-            if (N < 9) {    // 3 elements * 3 blocks
-                median = lo + ((hi - lo) >>> 1);
-            } else if (N < 32){ // 2^5
-                distance = N / 3;
-                lower = distance >> 1;
-                higher = (middle = (lower += lo) + distance) + distance;
-                median = ((Comparable) a[lower ]).compareTo(a[higher]) < 0 ?
-                        (((Comparable) a[middle]).compareTo(a[lower])  < 0 ? lower:  (((Comparable) a[middle]).compareTo(a[higher]) < 0 ? middle: higher)) :
-                        (((Comparable) a[middle]).compareTo(a[higher]) < 0 ? higher: (((Comparable) a[middle]).compareTo(a[lower])  < 0 ? middle: lower));
+            int distance, p1, p2, p3, p4, p5, median;
+            if (N < 64) {    // middle
+                median = lo + (N >>> 1);
+            } else if (N < 128){ // median-of-3
+                p3 = (p2 = (p1 = lo + rnd.nextInt(N >> 1)) + (distance = N >>> 2)) + distance;	// [0, N/2), [N/4, 3N/4), [N/2, N)+
+                median = ((Comparable) a[p1]).compareTo(a[p3]) < 0 ?
+                        (((Comparable) a[p2]).compareTo(a[p1]) < 0 ? p1: (((Comparable) a[p2]).compareTo(a[p3]) < 0 ? p2: p3)) :
+                        (((Comparable) a[p2]).compareTo(a[p3]) < 0 ? p3: (((Comparable) a[p2]).compareTo(a[p1]) < 0 ? p2: p1));
             }
-            else {  // N >= 2^5
-                int highest, lowest = (distance = N / 5) >> 1;  // choose the median of 5 elements
-                if (depth < 3) {
-                    ++depth;
-                    lowest = rnd.nextInt(distance); // 0 <= lower < N / 5
-                }
-                highest = (higher = (middle = (lower = (lowest += lo) + distance) + distance) + distance) + distance;
+            else {  // median-of-5
+                p5 = (p4 = (p3 = (p2 = (p1 = lo + rnd.nextInt((N >>> 2))) + (distance = (N >>> 3) + (N >>> 4))) + distance) + distance) + distance;
                 int t;  // temporary index
-                if (((Comparable) a[lowest]).compareTo(a[highest]) > 0) {t = lowest; lowest = highest; highest = t;}    // --> a[lowest] < a[highest]
-                if (((Comparable) a[lower ]).compareTo(a[higher]) < 0) {    // l < h
-                    if (((Comparable) a[middle]).compareTo(a[lower]) < 0) {t = middle; middle = lower; lower = t;}  // m < l < h
-                    else if (((Comparable) a[higher]).compareTo(a[middle]) < 0) {t = middle; middle = higher; higher = t;}  // l < h < m
-                } else if (((Comparable) a[middle]).compareTo(a[higher]) < 0) {t = middle; middle = higher; higher = lower; lower = t;} // m < h < l
-                else if (((Comparable) a[lower]).compareTo(a[middle]) < 0) {t = middle; middle = lower; lower = higher; higher = t;}    // h < l < m
-                else {t = lower; lower = higher; higher = t;}   // h < m < l
-                median = ((Comparable) a[middle]).compareTo(a[lowest]) < 0 ? (((Comparable) a[lowest]).compareTo(a[higher]) < 0 ? lowest: higher) :
-                      (((Comparable) a[highest]).compareTo(a[middle]) < 0 ? (((Comparable) a[highest]).compareTo(a[lower]) < 0 ?   lower: highest): middle);
+                if (((Comparable) a[p2]).compareTo(a[p4]) > 0) {t = p2; p2 = p4; p4 = t;}
+                if (((Comparable) a[p2]).compareTo(a[p3]) > 0) {t = p3; p3 = p2; p2 = t;}
+                else if (((Comparable) a[p3]).compareTo(a[p4]) > 0) {t = p3; p3 = p4; p4 = t;}
+                if (((Comparable) a[p1]).compareTo(a[p5]) > 0) {t = p1; p1 = p5; p5 = t;}
+                median = ((Comparable) a[p3]).compareTo(a[p1]) < 0 ? (((Comparable) a[p1]).compareTo(a[p4]) < 0 ? p1: p4):
+                        (((Comparable) a[p5]).compareTo(a[p3]) < 0 ? (((Comparable) a[p5]).compareTo(a[p2]) < 0 ? p2: p5): p3);
             }
 
             @SuppressWarnings("unchecked")
             Comparable<Object> pivot = (Comparable<Object>) a[median];
-            int lt = lo, gt = hi, eq = lo - 1, hole;
+            int lt = lo, gt = hi, eq = -1, hole;
             a[median] = a[hole = gt--];
-            for (; lt < hole; lt++) {
-                if (pivot.compareTo(a[lt]) <= 0) {
+            for (int chk; lt < hole; lt++) {
+                if ((chk = pivot.compareTo(a[lt])) <= 0) {
+                	if (chk < 0) eq = -1;
+                	else if (eq < 0) eq = hole;
                     a[hole] = a[lt]; hole = lt;
                     for (; gt > hole; gt--) {
-                        int chk = pivot.compareTo(a[gt]);
+                        chk = pivot.compareTo(a[gt]);
                         if (chk > 0) {
                             a[hole] = a[gt]; hole = gt;
-                            eq = lo - 1;
+                            eq = -1;
                         }
-                        else if (chk < 0) eq = lo - 1;  // clear
-                        else if (eq < lo) eq = gt;      // chk == 0 i.e. a[hole] == pivot
+                        else if (chk < 0) eq = -1;  // clear
+                        else if (eq < 0) eq = gt;      // chk == 0 i.e. a[hole] == pivot
                     }
                 }
             }
             a[hole] = pivot;    // restore the pivot
-            sort(a, lo, hole - 1, depth);
-            sort(a, (eq < lo ? hole : eq) + 1, hi, depth);
+            sort(a, lo, hole - 1);
+            sort(a, (eq < 0 ? hole : eq) + 1, hi);
         }
     }
     
