@@ -1,3 +1,5 @@
 bin/com/
-bin/*.jar
-bin/data
+data
+*.jar
+tmp*
+*~
