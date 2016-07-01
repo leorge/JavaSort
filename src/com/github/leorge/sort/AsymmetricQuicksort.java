@@ -6,7 +6,7 @@ import java.util.Random;
 public class AsymmetricQuicksort implements Algorithm {
 
     private static Random rnd = new Random(System.currentTimeMillis() + System.nanoTime());
-    private static final String myName = "QuickPivot";
+    private static final String myName = "AsymmetricQuicksort";
 
     @Override
     public String name() {
@@ -16,7 +16,7 @@ public class AsymmetricQuicksort implements Algorithm {
 
     @Override
     public String description() {
-        return "Asymmetric quicksort";
+        return "Asymmetric Quicksort";
     }
 
     @Override
