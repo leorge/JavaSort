@@ -21,10 +21,10 @@ public class QuickPivot implements Algorithm {
 
     @Override
     public void sort(Object[] a) {
-        sort(a, 0, a.length - 1);
+        sort((Comparable[])a, 0, a.length - 1);
     }
     
-    private void sort(Object[] a, int lo, int hi) {
+    private void sort(Comparable[] a, int lo, int hi) {
         if (lo < hi) {
             int N = hi - lo + 1;
             int distance, p1, p2, p3, p4, p5, median;
@@ -32,19 +32,19 @@ public class QuickPivot implements Algorithm {
                 median = lo + (N >>> 1);
             } else if (N < JavaSort.med3()){ // median-of-3
                 p3 = (p2 = (p1 = lo + rnd.nextInt(N >> 1)) + (distance = N >>> 2)) + distance;	// [0, N/2), [N/4, 3N/4), [N/2, N)+
-                median = ((Comparable) a[p1]).compareTo(a[p3]) < 0 ?
-                        (((Comparable) a[p2]).compareTo(a[p1]) < 0 ? p1: (((Comparable) a[p2]).compareTo(a[p3]) < 0 ? p2: p3)) :
-                        (((Comparable) a[p2]).compareTo(a[p3]) < 0 ? p3: (((Comparable) a[p2]).compareTo(a[p1]) < 0 ? p2: p1));
+                median = (a[p1]).compareTo(a[p3]) < 0 ?
+                        ((a[p2]).compareTo(a[p1]) < 0 ? p1: ((a[p2]).compareTo(a[p3]) < 0 ? p2: p3)) :
+                        ((a[p2]).compareTo(a[p3]) < 0 ? p3: ((a[p2]).compareTo(a[p1]) < 0 ? p2: p1));
             }
             else {  // median-of-5
                 p5 = (p4 = (p3 = (p2 = (p1 = lo + rnd.nextInt((N >>> 2))) + (distance = (N >>> 3) + (N >>> 4))) + distance) + distance) + distance;
                 int t;  // temporary index
-                if (((Comparable) a[p2]).compareTo(a[p4]) > 0) {t = p2; p2 = p4; p4 = t;}
-                if (((Comparable) a[p2]).compareTo(a[p3]) > 0) {t = p3; p3 = p2; p2 = t;}
-                else if (((Comparable) a[p3]).compareTo(a[p4]) > 0) {t = p3; p3 = p4; p4 = t;}
-                if (((Comparable) a[p1]).compareTo(a[p5]) > 0) {t = p1; p1 = p5; p5 = t;}
-                median = ((Comparable) a[p3]).compareTo(a[p1]) < 0 ? (((Comparable) a[p1]).compareTo(a[p4]) < 0 ? p1: p4):
-                        (((Comparable) a[p5]).compareTo(a[p3]) < 0 ? (((Comparable) a[p5]).compareTo(a[p2]) < 0 ? p2: p5): p3);
+                if ((a[p2]).compareTo(a[p4]) > 0) {t = p2; p2 = p4; p4 = t;}
+                if ((a[p2]).compareTo(a[p3]) > 0) {t = p3; p3 = p2; p2 = t;}
+                else if ((a[p3]).compareTo(a[p4]) > 0) {t = p3; p3 = p4; p4 = t;}
+                if ((a[p1]).compareTo(a[p5]) > 0) {t = p1; p1 = p5; p5 = t;}
+                median = (a[p3]).compareTo(a[p1]) < 0 ? ((a[p1]).compareTo(a[p4]) < 0 ? p1: p4):
+                        ((a[p5]).compareTo(a[p3]) < 0 ? ((a[p5]).compareTo(a[p2]) < 0 ? p2: p5): p3);
             }
 
             @SuppressWarnings("unchecked")
