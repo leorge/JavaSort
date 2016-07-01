@@ -11,7 +11,7 @@ import java.util.Map;
 import com.townleyenterprises.command.*;    // http://te-code.sourceforge.net
 public class JavaSort {
     private Algorithm sorter;
-    private static int myThreshold = 64;
+    private static int myCutOff = 16;	// Cut-off number to change to small algorithm
 	private static int myMiddle = 64;	// Choose the middle element as a pivot
 	private static int myMed3 = 128;	// Choose the median of three elements as a pivot
 
@@ -33,7 +33,7 @@ public class JavaSort {
     }
 
     public static int threshold() {
-        return myThreshold;
+        return myCutOff;
     }
 
     public static String join(Object[] a){
@@ -126,7 +126,7 @@ public class JavaSort {
         parser.parse(args);
 
         if (cmdCutOff.getMatched()) {   // threshold to switch algorithm
-            myThreshold = Integer.parseInt(cmdCutOff.getArg());
+            myCutOff = Integer.parseInt(cmdCutOff.getArg());
         }
         
         int N = 0;  // Number of elements
