@@ -12,8 +12,8 @@ import com.townleyenterprises.command.*;    // http://te-code.sourceforge.net
 public class JavaSort {
     private Algorithm sorter;
     private static int myCutOff = 16;	// Cut-off number to change to small algorithm
-	private static int myMiddle = 64;	// Choose the middle element as a pivot
-	private static int myMed3 = 128;	// Choose the median of three elements as a pivot
+	private static int myMiddle = 63;	// Choose the middle element as a pivot
+	private static int myMed3 = 127;	// Choose the median of three elements as a pivot
 
     public JavaSort(Algorithm obj) {
         // TODO Auto-generated constructor stub
@@ -105,28 +105,40 @@ public class JavaSort {
         Map<String, Algorithm> programs = new HashMap<String, Algorithm>();
         programs.put("l", new QsortLib());
         programs.put("h", new QuickHole());
-        programs.put("r", new AsymmetricQuicksort());
+        programs.put("a", new AsymmetricQuicksort());
         
         String postAmble = "Algorithm:\n";
         for (String key : programs.keySet()) {
             postAmble += "  " + key + " : " + programs.get(key).description() + "\n";
         }
-        CommandOption cmdCutOff = new CommandOption("threshold", 'C', true, "<N>", "Cut-off number.");
-        CommandOption cmdNum = new CommandOption("Number", 'N', true, "<N>", "Number of elements.");
-        CommandOption cmdRepeat = new CommandOption("repeat", 'R', true, "<times>", "Repeat count to sort (10).");
-        CommandOption cmdSkip = new CommandOption("skip", 'S', true, "<count>", "number of Skip data (1).");
-        CommandOption cmdPass = new CommandOption("pass", 'T', true, "<percent>", "uncertainty percenT to pass a Test (2%).");
-        CommandOption[] mainOptions = { cmdCutOff, cmdNum, cmdRepeat, cmdSkip, cmdPass};
+        CommandOption cmdCutOff = new CommandOption("threshold", 'c', true, "<N>", "Cut-off number.");
+        CommandOption cmdMed3	= new CommandOption("med3", '3', true, "<N>", "Max. N to choose the median-of-3(127).");
+        CommandOption cmdMiddle = new CommandOption("middle", 'd', true, "<N>", "Max. N of choice the middle element(63).");
+        CommandOption cmdNum 	= new CommandOption("number", 'n', true, "<N>", "Number of elements.");
+        CommandOption cmdPass	= new CommandOption("pass", 't', true, "<percent>", "uncertainty percenT to pass a Test (2%).");
+        CommandOption cmdRepeat	= new CommandOption("repeat", 'r', true, "<times>", "Repeat count to sort (10).");
+        CommandOption cmdSkip	= new CommandOption("skip", 's', true, "<count>", "number of Skip data (1).");
+        CommandOption[] mainOptions = { cmdMed3, cmdCutOff, cmdMiddle, cmdNum, cmdRepeat, cmdSkip, cmdPass};
         
-        // parse command.
+        // prepare to parse command.
         
         CommandParser parser = new CommandParser("JavaSort", "Algorithms [DataFile]");
         parser.addCommandListener(new DefaultCommandListener("options", mainOptions));
         parser.setExtraHelpText("", postAmble);
         parser.parse(args);
 
+        // command options
+        
         if (cmdCutOff.getMatched()) {   // threshold to switch algorithm
             myCutOff = Integer.parseInt(cmdCutOff.getArg());
+        }
+
+        if (cmdMed3.getMatched()) {
+            myMed3 = Integer.parseInt(cmdNum.getArg());
+        }
+
+        if (cmdNum.getMatched()) {
+            myMiddle = Integer.parseInt(cmdNum.getArg());
         }
         
         int N = 0;  // Number of elements
@@ -159,6 +171,8 @@ public class JavaSort {
             if (i <= 0) throw new InvalidParameterException("Threshold to pass a test must be a positive percent.");
             limit = (2. * i + 1.) / 200.;
         }
+        
+        // file name for input
         
         String[] largs = parser.getUnhandledArguments();
         if (largs.length == 0) return;  // No algorithm
