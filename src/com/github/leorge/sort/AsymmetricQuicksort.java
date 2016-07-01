@@ -3,7 +3,7 @@ package com.github.leorge.sort;
 import java.util.Random;
 
 /* Hybrid sort of quicksort and simple insertion sort */
-public class QuickPivot implements Algorithm {
+public class AsymmetricQuicksort implements Algorithm {
 
     private static Random rnd = new Random(System.currentTimeMillis() + System.nanoTime());
     private static final String myName = "QuickPivot";
@@ -77,7 +77,7 @@ public class QuickPivot implements Algorithm {
      * @param args filename
      */
     public static void main(String[] args) {
-        QuickPivot obj = new QuickPivot();
+        AsymmetricQuicksort obj = new AsymmetricQuicksort();
         JavaSort.test(obj, args[0]);
     }
 }

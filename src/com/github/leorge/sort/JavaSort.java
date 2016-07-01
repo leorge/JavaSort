@@ -105,7 +105,7 @@ public class JavaSort {
         Map<String, Algorithm> programs = new HashMap<String, Algorithm>();
         programs.put("l", new QsortLib());
         programs.put("h", new QuickHole());
-        programs.put("r", new QuickPivot());
+        programs.put("r", new AsymmetricQuicksort());
         
         String postAmble = "Algorithm:\n";
         for (String key : programs.keySet()) {
