@@ -12,10 +12,20 @@ import com.townleyenterprises.command.*;    // http://te-code.sourceforge.net
 public class JavaSort {
     private Algorithm sorter;
     private static int myThreshold = 64;
+	private static int myMiddle = 64;	// Choose the middle element as a pivot
+	private static int myMed3 = 128;	// Choose the median of three elements as a pivot
 
     public JavaSort(Algorithm obj) {
         // TODO Auto-generated constructor stub
         sorter = obj;
+    }
+    
+    public static int middle() {
+    	return myMiddle;
+    }
+    
+    public static int med3() {
+    	return myMed3;
     }
     
     public void sort(Object[] a) {
@@ -103,8 +113,8 @@ public class JavaSort {
         }
         CommandOption cmdCutOff = new CommandOption("threshold", 'C', true, "<N>", "Cut-off number.");
         CommandOption cmdNum = new CommandOption("Number", 'N', true, "<N>", "Number of elements.");
-        CommandOption cmdRepeat = new CommandOption("repeat", 'R', true, "<times>", "Repeat count to sort (skip+10).");
-        CommandOption cmdSkip = new CommandOption("skip", 'S', true, "<count>", "number of Skip data.");
+        CommandOption cmdRepeat = new CommandOption("repeat", 'R', true, "<times>", "Repeat count to sort (10).");
+        CommandOption cmdSkip = new CommandOption("skip", 'S', true, "<count>", "number of Skip data (1).");
         CommandOption cmdPass = new CommandOption("pass", 'T', true, "<percent>", "uncertainty percenT to pass a Test (2%).");
         CommandOption[] mainOptions = { cmdCutOff, cmdNum, cmdRepeat, cmdSkip, cmdPass};
         

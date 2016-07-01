@@ -16,7 +16,7 @@ public class QuickPivot implements Algorithm {
 
     @Override
     public String description() {
-        return "quicksort median of random elements";
+        return "Asymmetric quicksort";
     }
 
     @Override
@@ -28,9 +28,9 @@ public class QuickPivot implements Algorithm {
         if (lo < hi) {
             int N = hi - lo + 1;
             int distance, p1, p2, p3, p4, p5, median;
-            if (N < 64) {    // middle
+            if (N < JavaSort.middle()) {    // middle
                 median = lo + (N >>> 1);
-            } else if (N < 128){ // median-of-3
+            } else if (N < JavaSort.med3()){ // median-of-3
                 p3 = (p2 = (p1 = lo + rnd.nextInt(N >> 1)) + (distance = N >>> 2)) + distance;	// [0, N/2), [N/4, 3N/4), [N/2, N)+
                 median = ((Comparable) a[p1]).compareTo(a[p3]) < 0 ?
                         (((Comparable) a[p2]).compareTo(a[p1]) < 0 ? p1: (((Comparable) a[p2]).compareTo(a[p3]) < 0 ? p2: p3)) :
