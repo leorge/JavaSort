@@ -1,6 +1,3 @@
 #!/bin/sh
-if [ $# -eq 0 ]; then
-    echo "type $0 -?"
-else
-    java -cp .:`echo *.jar|sed 's/ /:/g'` com.github.leorge.sort.JavaSort $*
-fi
+if [ $# -eq 0 ]; then set -- "-?"; fi
+java -cp .:`echo *.jar|sed 's/ /:/g'` com.github.leorge.sort.JavaSort $*
