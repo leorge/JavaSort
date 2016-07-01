@@ -114,7 +114,7 @@ public class JavaSort {
         CommandOption cmdCutOff = new CommandOption("threshold", 'c', true, "<N>", "Cut-off number for small sort (16).");
         CommandOption cmdMed3	= new CommandOption("med3", '3', true, "<N>", "Max. N to choose the median-of-3 (127).");
         CommandOption cmdMiddle = new CommandOption("middle", 'd', true, "<N>", "Max. N of choice the middle element (63).");
-        CommandOption cmdNum 	= new CommandOption("number", 'n', true, "<N>", "Number of elements.");
+        CommandOption cmdNum 	= new CommandOption("number", 'N', true, "<N>", "Number of elements.");
         CommandOption cmdPass	= new CommandOption("pass", 't', true, "<percent>", "uncertainty percenT to pass a Test (2%).");
         CommandOption cmdRepeat	= new CommandOption("repeat", 'r', true, "<times>", "Repeat count to sort (10).");
         CommandOption cmdSkip	= new CommandOption("skip", 's', true, "<count>", "number of Skip data (1).");
