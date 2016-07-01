@@ -1,0 +1,50 @@
+#!/bin/sh
+LANG=C
+if [ $# -lt 1 ]; then
+    echo "usage : $0  log2(N)  [repeat]"
+    exit
+fi
+log2N=$1; shift     # log2(N)
+if [ $log2N -lt 12 ]; then log2N=12; fi
+if [ $# -gt 0 ]; then
+    repeat=$1; shift
+    if [ $repeat -le 0 ]; then repeat=1; fi
+fi
+
+sed -i -e '1,/^@/!d' $0     # Delete data part
+echo "start    : `date -u`" >> $0       # add date
+echo "computer : `uname -norpv`" >> $0
+echo "operator : `id -un`" >> $0
+echo "option   : $log2N ${repeat:=1}" >> $0
+
+#
+# Compare Dual Pivoot Quicksort and new Quicksort.
+#
+#   l : quicksort - java.util.Arrays.sort()
+#   h : quicksort - The simplest quicksort with a pivot Hole
+#
+for i in `seq 1 $repeat`; do echo "$0 $i `date`" > /dev/stderr
+    ./random.awk `echo 2^$log2N | bc` > data
+    for j in `seq 12 $log2N`; do N=`echo 2^$j | bc`; echo "$i:$j" | tee /dev/stderr
+        ./jsort -N $N lh data
+    done
+done > tmp$$
+echo "stop     : `date -u`" >> $0       # add date
+
+OUT=tmp.`basename $0`
+./et.awk -v 'x=log2(N)' tmp$$ > $OUT
+expand -t `./col.awk $OUT` $OUT | tee -a $0
+echo "Raw data is in a file tmp$$"
+
+exit
+@
+start    : Fri Jul  1 22:08:23 UTC 2016
+computer : Phenom 3.13.0-91-generic #138-Ubuntu SMP Fri Jun 24 17:00:34 UTC 2016 x86_64 GNU/Linux
+operator : leo
+option   : 15 1
+stop     : Fri Jul  1 22:08:27 UTC 2016
+1
+log2(N)   12  13   14   15
+QsortLib  953 2220 4946 11268
+QuickHole 950 2103 5209 11955
+
