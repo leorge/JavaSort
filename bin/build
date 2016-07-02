@@ -1,0 +1,2 @@
+#!/bin/sh
+javac -Xlint:unchecked -d . -cp .:`echo *.jar|sed 's/ /:/g'` ../src/com/github/leorge/sort/*.java
