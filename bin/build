@@ -1,5 +1,4 @@
 #!/bin/sh
-rm -rf com
 javac -Xlint:unchecked -d . -cp .:`echo *.jar|sed 's/ /:/g'` \
 -sourcepath ../src \
 ../src/com/github/leorge/sort/JavaSort.java
