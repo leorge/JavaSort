@@ -14,6 +14,8 @@ public class JavaSort {
     private static int myCutOff = 16;	// Cut-off number to change to small algorithm
 	private static int myMiddle = 63;	// Choose the middle element as a pivot
 	private static int myMed3 = 127;	// Choose the median of three elements as a pivot
+	
+	private static Data[] collation, original;
 
     public JavaSort(Algorithm obj) {
         // TODO Auto-generated constructor stub
@@ -55,6 +57,19 @@ public class JavaSort {
         else return join(a, lo, lo + 15) + ":...:" + join(a, hi - 15, hi);
     }
     
+    static boolean verify(String name, final Data[] sorted) {
+//      if (! isSorted(sorted, name + " failed to sort. - ")) return false;
+        for (int i = 0; i < sorted.length; ++i) {
+            if (sorted[i].compareTo(collation[i]) != 0) {
+                System.out.println("right : " + dumpArray(collation));
+                System.out.println("wrong : " + dumpArray(sorted));
+                System.out.println(name + " : Data a[" + i + "] = " + sorted[i] + " should be " + collation[i]);        
+                return false;
+            }
+        }
+        return true;
+    }
+    
     public static String[] readStrArray(String filename) {
         String fileContentStr = null;
         try {
@@ -70,30 +85,31 @@ public class JavaSort {
         return strArray;
     }
     
-    static boolean compareStr(String name, final String[] source, final String[] sorted) {
-//      if (! isSorted(sorted, name + " failed to sort. - ")) return false;
-        String[] check = source.clone();
-        java.util.Arrays.sort(check);       
-        for (int i = 0; i < sorted.length; ++i) {
-            if (! check[i].equals(sorted[i])) {
-                System.out.println("right : " + dumpArray(sorted));
-                System.out.println("wrong : " + dumpArray(source));
-                System.out.println(name + " : Data a[" + i + "] = " + sorted[i] + " should be " + check[i]);        
-                return false;
-            }
+    static boolean readData(String filename, int N) {
+        String[] readBuffer = readStrArray(filename);
+        if (readBuffer == null) return false;
+        else {
+            int i = readBuffer.length;
+            if (i == 0) return false;     // no data
+            if (N == 0 || N > i) N = i;
         }
-        return true;
-    }
-
-    static void test(Algorithm obj, String filename) {
-        String[] source = readStrArray(filename.isEmpty() ? "/dev/stdin" : filename);
-        if (source == null || source.length == 0) return;
-        String[] sorted = source.clone();
-        obj.sort(sorted);
         
-        // sort as String
-        if (! compareStr(obj.name(), source, sorted)) System.exit(0);
-        System.out.println("OK - " + dumpArray(sorted));        
+        original = new Data[N];
+        for (int i = 0; i < N; i++) original[i] = new Data(0, readBuffer[i]);
+        readBuffer = null;
+        collation = new Data[N];
+        System.arraycopy(original, 0, collation, 0, N);
+        java.util.Arrays.sort(collation);
+    	return true;
+    }
+    
+
+    static void test(Algorithm alg, String filename) {
+    	if (! readData(filename, 0)) return;
+        Data[] target = original.clone();
+        alg.sort(target);
+        if (! verify(alg.name(), target)) System.exit(0);
+        System.out.println("OK - " + dumpArray(target));        
     }
     
     /**
@@ -166,52 +182,45 @@ public class JavaSort {
             if (repeatCount <= 0) throw new InvalidParameterException("repeat count must be a positive number.");
         }
 
-        double limit = 0.025;   // less than 2%
+        double pass = 0.025;   // less than 2%
         if (cmdPass.getMatched()) {
             int i = Integer.parseInt(cmdPass.getArg());
             if (i <= 0) throw new InvalidParameterException("Threshold to pass a test must be a positive percent.");
-            limit = (2. * i + 1.) / 200.;
+            pass = (2. * i + 1.) / 200.;
         }
         
-        // file name for input
+        // algorithms
         
         String[] largs = parser.getUnhandledArguments();
         if (largs.length == 0) return;  // No algorithm
         CharSequence algorithms = largs[0];
+
+        // filename
         
-        // read data.
+        readData(largs.length > 1 ? largs[1] : "/dev/stdin", N);
         
-        String[] readBuffer = readStrArray(largs.length > 1 ? largs[1] : "/dev/stdin");
-        if (readBuffer == null) return;
-        else {
-            int i = readBuffer.length;
-            if (i == 0) return;     // no data
-            if (N == 0 || N > i) N = i;
-        }
-        
-        String[] strArray = new String[N];
-        System.arraycopy(readBuffer, 0, strArray, 0, N); readBuffer = null;
 
         // sort
 
         for (int pos = 0; pos < algorithms.length(); pos++) {
-            Algorithm sorter = programs.get(String.valueOf(algorithms.charAt(pos)));
-            if (sorter != null) {
-                String[] strDup = null;
+            Algorithm alg = programs.get(String.valueOf(algorithms.charAt(pos)));
+            if (alg != null) {
+                Data[] workArray = null;
                 do {    // evaluate
                     eTime.clear();
                     for (int i = 0; i < repeatCount; i++) {
-                        strDup = strArray.clone();          
+                        workArray = original.clone();          
                         long startTime = System.nanoTime();
-                        sorter.sort(strDup);
+                        alg.sort(workArray);
                         eTime.add(System.nanoTime() - startTime);
                     }
-                    System.out.println(eTime.result(sorter.name()));
-                } while (eTime.stdDev() / eTime.mean() >= limit);
+                    System.out.println(eTime.result(alg.name()));
+                } while (eTime.stdDev() / eTime.mean() >= pass);
                 // check result
-                if (! compareStr(sorter.name(), strArray, strDup)) return;
+                if (! verify(alg.name(), workArray)) return;
             }
             else System.out.println("Algorithm \"" + algorithms.charAt(pos) + "\" is undefined.");
         }
+        collation = null;
     }
 }
