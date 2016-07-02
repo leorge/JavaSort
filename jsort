@@ -1,3 +1,4 @@
 #!/bin/sh
 if [ $# -eq 0 ]; then set -- "-?"; fi
-java -cp .:`echo *.jar|sed 's/ /:/g'` com.github.leorge.sort.JavaSort $*
+java -cp .:bin:`echo *.jar|sed 's/ /:/g'` com.github.leorge.sort.JavaSort $*
+
