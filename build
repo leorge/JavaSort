@@ -1,4 +1,4 @@
 #!/bin/sh
-javac -Xlint:unchecked -d bin -cp .:`echo *.jar|sed 's/ /:/g'` \
--sourcepath src \
+javac -Xlint:unchecked -cp .:`echo *.jar|sed 's/ /:/g'` \
+-sourcepath src -d bin \
 src/com/github/leorge/sort/JavaSort.java
