@@ -1,8 +1,4 @@
 #!/bin/sh
-javac -Xlint:unchecked -d . -cp .:`echo *.jar|sed 's/ /:/g'` \
-../src/com/github/leorge/sort/ElapsedTime.java \
-../src/com/github/leorge/sort/Algorithm.java \
-../src/com/github/leorge/sort/QsortLib.java \
-../src/com/github/leorge/sort/QuickHole.java \
-../src/com/github/leorge/sort/AsymmetricQuicksort.java \
+javac -Xlint:unchecked -d . -s ../src \
+-cp .:`echo *.jar|sed 's/ /:/g'` \
 ../src/com/github/leorge/sort/JavaSort.java
