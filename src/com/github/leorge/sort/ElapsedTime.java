@@ -4,8 +4,7 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 // https://commons.apache.org/proper/commons-math/
-//import org.apache.commons.math3.stat.descriptive.SynchronizedSummaryStatistics;	// 3.5
-import org.apache.commons.math3.stat.descriptive.*;		// 3.6
+import org.apache.commons.math3.stat.descriptive.SynchronizedSummaryStatistics;
 
 public class ElapsedTime {
     
@@ -91,11 +90,11 @@ public class ElapsedTime {
     /**
      * @param args
      */
-    public static void main(String[] args) {
-        String strArray[] = JavaSort.readStrArray(args.length > 0 ? args[0] : "/dev/stdin");
-        if (strArray == null || strArray.length == 0) return;
-        ElapsedTime obj = new ElapsedTime();
-        for (int i = 0; i < strArray.length; i++) obj.add(Long.parseLong(strArray[i]));
-        System.out.println(obj.result("main()"));
-    }
+//    public static void main(String[] args) {
+//        String strArray[] = JavaSort.readStrArray(args.length > 0 ? args[0] : "/dev/stdin");
+//        if (strArray == null || strArray.length == 0) return;
+//        ElapsedTime obj = new ElapsedTime();
+//        for (int i = 0; i < strArray.length; i++) obj.add(Long.parseLong(strArray[i]));
+//        System.out.println(obj.result("main()"));
+//    }
 }

@@ -1,19 +1,17 @@
 package com.github.leorge.sort;
 
-/* The simplest new quicksort with a pivot hole */
+/* Hybrid sort of quicksort and simple insertion sort */
 public class QuickHole implements Algorithm {
     
-    private static final String myName = "QuickHole";
-
     @Override
     public String name() {
         // TODO Auto-generated method stub
-        return myName;
+        return this.getClass().getSimpleName();
     }
 
     @Override
     public String description() {
-        return "The simplest quicksort with a pivot Hole";
+        return "prototype of quicksort with hole";
     }
 
     @Override
@@ -21,13 +19,13 @@ public class QuickHole implements Algorithm {
         sort(a, 0, a.length - 1);
     }
     
-    private void sort(Object[] a, int lo, int hi) {
+    public void sort(Object[] a, int lo, int hi) {
         if (lo < hi) {
             @SuppressWarnings("unchecked")
-            Comparable<Object> pivot = (Comparable<Object>) a[hi];
+            Comparable<Object> pivot = (Comparable) a[hi];
             int lt = lo, gt = hi, hole = gt--;
             for (; lt < hole; lt++) {
-                if (pivot.compareTo(a[lt]) < 0) {
+                if (pivot.compareTo(a[lt]) <= 0) {
                     a[hole] = a[lt]; hole = lt;
                     for (; gt > hole; gt--) {
                         if (pivot.compareTo(a[gt]) > 0) {
@@ -40,13 +38,5 @@ public class QuickHole implements Algorithm {
             sort(a, lo, hole - 1);
             sort(a, hole + 1, hi);
         }
-    }
-    
-    /**
-     * @param args filename
-     */
-    public static void main(String[] args) {
-        QuickHole obj = new QuickHole();
-        JavaSort.test(obj, args[0]);
     }
 }

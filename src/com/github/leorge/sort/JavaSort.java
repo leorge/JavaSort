@@ -11,23 +11,11 @@ import java.util.Map;
 import com.townleyenterprises.command.*;    // http://te-code.sourceforge.net
 public class JavaSort {
     private Algorithm sorter;
-    private static int myCutOff = 16;	// Cut-off number to change to small algorithm
-	private static int myMiddle = 63;	// Choose the middle element as a pivot
-	private static int myMed3 = 127;	// Choose the median of three elements as a pivot
-	
-	private static Data[] collation, original;
+    private static int myThreshold = 64;
 
     public JavaSort(Algorithm obj) {
         // TODO Auto-generated constructor stub
         sorter = obj;
-    }
-    
-    public static int middle() {
-    	return myMiddle;
-    }
-    
-    public static int med3() {
-    	return myMed3;
     }
     
     public void sort(Object[] a) {
@@ -35,7 +23,7 @@ public class JavaSort {
     }
 
     public static int threshold() {
-        return myCutOff;
+        return myThreshold;
     }
 
     public static String join(Object[] a){
@@ -57,19 +45,6 @@ public class JavaSort {
         else return join(a, lo, lo + 15) + ":...:" + join(a, hi - 15, hi);
     }
     
-    static boolean verify(String name, final Data[] sorted) {
-//      if (! isSorted(sorted, name + " failed to sort. - ")) return false;
-        for (int i = 0; i < sorted.length; ++i) {
-            if (sorted[i].compareTo(collation[i]) != 0) {
-                System.out.println("right : " + dumpArray(collation));
-                System.out.println("wrong : " + dumpArray(sorted));
-                System.out.println(name + " : Data a[" + i + "] = " + sorted[i] + " should be " + collation[i]);        
-                return false;
-            }
-        }
-        return true;
-    }
-    
     public static String[] readStrArray(String filename) {
         String fileContentStr = null;
         try {
@@ -85,31 +60,30 @@ public class JavaSort {
         return strArray;
     }
     
-    static boolean readData(String filename, int N) {
-        String[] readBuffer = readStrArray(filename);
-        if (readBuffer == null) return false;
-        else {
-            int i = readBuffer.length;
-            if (i == 0) return false;     // no data
-            if (N == 0 || N > i) N = i;
+    static boolean compareStr(String name, final String[] source, final String[] sorted) {
+//      if (! isSorted(sorted, name + " failed to sort. - ")) return false;
+        String[] check = source.clone();
+        java.util.Arrays.sort(check);       
+        for (int i = 0; i < sorted.length; ++i) {
+            if (! check[i].equals(sorted[i])) {
+                System.out.println("right : " + dumpArray(sorted));
+                System.out.println("wrong : " + dumpArray(source));
+                System.out.println(name + " : Data a[" + i + "] = " + sorted[i] + " should be " + check[i]);        
+                return false;
+            }
         }
-        
-        original = new Data[N];
-        for (int i = 0; i < N; i++) original[i] = new Data(0, readBuffer[i]);
-        readBuffer = null;
-        collation = new Data[N];
-        System.arraycopy(original, 0, collation, 0, N);
-        java.util.Arrays.sort(collation);
-    	return true;
+        return true;
     }
-    
 
-    static void test(Algorithm alg, String filename) {
-    	if (! readData(filename, 0)) return;
-        Data[] target = original.clone();
-        alg.sort(target);
-        if (! verify(alg.name(), target)) System.exit(0);
-        System.out.println("OK - " + dumpArray(target));        
+    static void test(Algorithm obj, String filename) {
+        String[] source = readStrArray(filename.isEmpty() ? "/dev/stdin" : filename);
+        if (source == null || source.length == 0) return;
+        String[] sorted = source.clone();
+        obj.sort(sorted);
+        
+        // sort as String
+        if (! compareStr(obj.name(), source, sorted)) System.exit(0);
+        System.out.println("OK - " + dumpArray(sorted));        
     }
     
     /**
@@ -119,43 +93,30 @@ public class JavaSort {
         ElapsedTime eTime = new ElapsedTime();
 
         Map<String, Algorithm> programs = new HashMap<String, Algorithm>();
-        programs.put("l", new QsortLib());
+        programs.put("l", new ArraysSort());
         programs.put("h", new QuickHole());
-        programs.put("a", new AsymmetricQuicksort());
+        programs.put("r", new AsymmQsort());
         
         String postAmble = "Algorithm:\n";
         for (String key : programs.keySet()) {
             postAmble += "  " + key + " : " + programs.get(key).description() + "\n";
         }
-        CommandOption cmdCutOff = new CommandOption("threshold", 'c', true, "<N>", "Cut-off number for small sort (16).");
-        CommandOption cmdMed3	= new CommandOption("med3", '3', true, "<N>", "Max. N to choose the median-of-3 (127).");
-        CommandOption cmdMiddle = new CommandOption("middle", 'd', true, "<N>", "Max. N of choice the middle element (63).");
-        CommandOption cmdNum 	= new CommandOption("number", 'N', true, "<N>", "Number of elements.");
-        CommandOption cmdPass	= new CommandOption("pass", 't', true, "<percent>", "uncertainty percenT to pass a Test (2%).");
-        CommandOption cmdRepeat	= new CommandOption("repeat", 'r', true, "<times>", "Repeat count to sort (10).");
-        CommandOption cmdSkip	= new CommandOption("skip", 's', true, "<count>", "number of Skip data (1).");
+        CommandOption cmdCutOff = new CommandOption("threshold", 'C', true, "<N>", "Cut-off number.");
+        CommandOption cmdNum = new CommandOption("Number", 'N', true, "<N>", "Number of elements.");
+        CommandOption cmdRepeat = new CommandOption("repeat", 'R', true, "<times>", "Repeat count to sort (skip+10).");
+        CommandOption cmdSkip = new CommandOption("skip", 'S', true, "<count>", "number of Skip data.");
+        CommandOption cmdPass = new CommandOption("pass", 'T', true, "<percent>", "uncertainty percenT to pass a Test (2%).");
+        CommandOption[] mainOptions = { cmdCutOff, cmdNum, cmdRepeat, cmdSkip, cmdPass};
         
-        CommandOption[] mainOptions = { cmdMed3, cmdCutOff, cmdMiddle, cmdNum, cmdRepeat, cmdSkip, cmdPass};
-        
-        // prepare to parse command.
+        // parse command.
         
         CommandParser parser = new CommandParser("JavaSort", "Algorithms [DataFile]");
         parser.addCommandListener(new DefaultCommandListener("options", mainOptions));
         parser.setExtraHelpText("", postAmble);
         parser.parse(args);
 
-        // command options
-        
         if (cmdCutOff.getMatched()) {   // threshold to switch algorithm
-            myCutOff = Integer.parseInt(cmdCutOff.getArg());
-        }
-
-        if (cmdMed3.getMatched()) {
-            myMed3 = Integer.parseInt(cmdNum.getArg());
-        }
-
-        if (cmdNum.getMatched()) {
-            myMiddle = Integer.parseInt(cmdNum.getArg());
+            myThreshold = Integer.parseInt(cmdCutOff.getArg());
         }
         
         int N = 0;  // Number of elements
@@ -182,45 +143,50 @@ public class JavaSort {
             if (repeatCount <= 0) throw new InvalidParameterException("repeat count must be a positive number.");
         }
 
-        double pass = 0.025;   // less than 2%
+        double limit = 0.025;   // less than 2%
         if (cmdPass.getMatched()) {
             int i = Integer.parseInt(cmdPass.getArg());
             if (i <= 0) throw new InvalidParameterException("Threshold to pass a test must be a positive percent.");
-            pass = (2. * i + 1.) / 200.;
+            limit = (2. * i + 1.) / 200.;
         }
-        
-        // algorithms
         
         String[] largs = parser.getUnhandledArguments();
         if (largs.length == 0) return;  // No algorithm
         CharSequence algorithms = largs[0];
-
-        // filename
         
-        readData(largs.length > 1 ? largs[1] : "/dev/stdin", N);
+        // read data.
         
+        String[] readBuffer = readStrArray(largs.length > 1 ? largs[1] : "/dev/stdin");
+        if (readBuffer == null) return;
+        else {
+            int i = readBuffer.length;
+            if (i == 0) return;     // no data
+            if (N == 0 || N > i) N = i;
+        }
+        
+        String[] strArray = new String[N];
+        System.arraycopy(readBuffer, 0, strArray, 0, N); readBuffer = null;
 
         // sort
 
         for (int pos = 0; pos < algorithms.length(); pos++) {
-            Algorithm alg = programs.get(String.valueOf(algorithms.charAt(pos)));
-            if (alg != null) {
-                Data[] workArray = null;
+            Algorithm sorter = programs.get(String.valueOf(algorithms.charAt(pos)));
+            if (sorter != null) {
+                String[] strDup = null;
                 do {    // evaluate
                     eTime.clear();
                     for (int i = 0; i < repeatCount; i++) {
-                        workArray = original.clone();          
+                        strDup = strArray.clone();          
                         long startTime = System.nanoTime();
-                        alg.sort(workArray);
+                        sorter.sort(strDup);
                         eTime.add(System.nanoTime() - startTime);
                     }
-                    System.out.println(eTime.result(alg.name()));
-                } while (eTime.stdDev() / eTime.mean() >= pass);
+                    System.out.println(eTime.result(sorter.name()));
+                } while (eTime.stdDev() / eTime.mean() >= limit);
                 // check result
-                if (! verify(alg.name(), workArray)) return;
+                if (! compareStr(sorter.name(), strArray, strDup)) return;
             }
             else System.out.println("Algorithm \"" + algorithms.charAt(pos) + "\" is undefined.");
         }
-        collation = null;
     }
 }
