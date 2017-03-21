@@ -92,14 +92,17 @@ public class JavaSort {
     public static void main(String[] args) {
         ElapsedTime eTime = new ElapsedTime();
 
+        int	i = 0;	// common temporary variable
+        String options[] = {"l", "h", "a"};
         Map<String, Algorithm> programs = new HashMap<String, Algorithm>();
-        programs.put("l", new ArraysSort());
-        programs.put("h", new QuickHole());
-        programs.put("r", new AsymmQsort());
+        programs.put(options[i++], new ArraysSort());
+        programs.put(options[i++], new QuickHole());
+        programs.put(options[i++], new AsymmQsort());
         
         String postAmble = "Algorithm:\n";
-        for (String key : programs.keySet()) {
-            postAmble += "  " + key + " : " + programs.get(key).description() + "\n";
+//        for (String key : programs.keySet()) {
+        for (String key : options) {
+            postAmble += "  " + key + " - " + programs.get(key).description() + "\n";
         }
         CommandOption cmdCutOff = new CommandOption("threshold", 'C', true, "<N>", "Cut-off number.");
         CommandOption cmdNum = new CommandOption("Number", 'N', true, "<N>", "Number of elements.");
@@ -145,7 +148,7 @@ public class JavaSort {
 
         double limit = 0.025;   // less than 2%
         if (cmdPass.getMatched()) {
-            int i = Integer.parseInt(cmdPass.getArg());
+            i = Integer.parseInt(cmdPass.getArg());
             if (i <= 0) throw new InvalidParameterException("Threshold to pass a test must be a positive percent.");
             limit = (2. * i + 1.) / 200.;
         }
@@ -159,7 +162,7 @@ public class JavaSort {
         String[] readBuffer = readStrArray(largs.length > 1 ? largs[1] : "/dev/stdin");
         if (readBuffer == null) return;
         else {
-            int i = readBuffer.length;
+            i = readBuffer.length;
             if (i == 0) return;     // no data
             if (N == 0 || N > i) N = i;
         }
@@ -175,7 +178,7 @@ public class JavaSort {
                 String[] strDup = null;
                 do {    // evaluate
                     eTime.clear();
-                    for (int i = 0; i < repeatCount; i++) {
+                    for (i = 0; i < repeatCount; i++) {
                         strDup = strArray.clone();          
                         long startTime = System.nanoTime();
                         sorter.sort(strDup);
