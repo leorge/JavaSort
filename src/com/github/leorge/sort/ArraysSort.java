@@ -1,6 +1,6 @@
 package com.github.leorge.sort;
 
-public class QsortLib implements Algorithm {
+public class ArraysSort implements Algorithm {
 
     private static final String myName = "QsortLib";
     
