@@ -12,7 +12,7 @@ public class ArraysSort implements Algorithm {
 
     @Override
     public String description() {
-        return "java.util.Arrays.sort()";
+        return "sort with a Library: java.util.Arrays.sort()";
     }
 
     @Override

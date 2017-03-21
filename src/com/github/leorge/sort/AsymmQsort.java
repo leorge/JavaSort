@@ -15,7 +15,7 @@ public class AsymmQsort implements Algorithm {
 
     @Override
     public String description() {
-        return "quicksort median of random elements";
+        return "Asymmetrick quicksort";
     }
 
     @Override

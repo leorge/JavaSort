@@ -11,7 +11,7 @@ public class QuickHole implements Algorithm {
 
     @Override
     public String description() {
-        return "prototype of quicksort with hole";
+        return "simplest new quicksort with Hole";
     }
 
     @Override
