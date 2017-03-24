@@ -1,0 +1,25 @@
+#
+# Make a jar file by the following procedure.
+#
+#   1) Download the following jar files here.
+#       a. te-common.jar 
+#           https://sourceforge.net/projects/te-code/files/te-common/
+#
+#       b. commons-math3-3.xxxx.jar
+#           https://commons.apache.org/proper/commons-math/download_math.cgi
+#
+#	2) Create a subdirectory "bin/com/" either from JavaSort.jar or by eclipse.
+#
+#   3) Edit jar filenames in the text file "mani.fest".
+#
+#   4) Launch me to make a jar file.
+#       bash makeJar
+#
+#   5) Run.
+#       java -jar JavaSort.jar -?
+#
+#
+rm -f JavaSort.jar
+pushd bin
+jar cvfm ../JavaSort.jar ../mani.fest com
+popd
