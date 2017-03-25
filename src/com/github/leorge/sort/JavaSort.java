@@ -11,7 +11,7 @@ import java.util.Map;
 import com.townleyenterprises.command.*;    // http://te-code.sourceforge.net
 public class JavaSort {
     private Algorithm sorter;
-    private static int myThreshold = 64;
+    private static int myThreshold = 128;
 
     public JavaSort(Algorithm obj) {
         // TODO Auto-generated constructor stub
@@ -82,7 +82,7 @@ public class JavaSort {
         obj.sort(sorted);
         
         // sort as String
-        if (! compareStr(obj.name(), source, sorted)) System.exit(0);
+        if (! compareStr(obj.getClass().getSimpleName(), source, sorted)) System.exit(0);
         System.out.println("OK - " + dumpArray(sorted));        
     }
     
@@ -102,7 +102,7 @@ public class JavaSort {
         String postAmble = "Algorithm:\n";
 //        for (String key : programs.keySet()) {
         for (String key : options) {
-            postAmble += "  " + key + " - " + programs.get(key).description() + "\n";
+            postAmble += "  " + key + " - " + programs.get(key).toString() + "\n";
         }
         CommandOption cmdCutOff = new CommandOption("threshold", 'C', true, "<N>", "Cut-off number.");
         CommandOption cmdNum = new CommandOption("Number", 'N', true, "<N>", "Number of elements.");
@@ -184,10 +184,10 @@ public class JavaSort {
                         sorter.sort(strDup);
                         eTime.add(System.nanoTime() - startTime);
                     }
-                    System.out.println(eTime.result(sorter.name()));
+                    System.out.println(eTime.result(sorter.getClass().getSimpleName()));
                 } while (eTime.stdDev() / eTime.mean() >= limit);
                 // check result
-                if (! compareStr(sorter.name(), strArray, strDup)) return;
+                if (! compareStr(sorter.getClass().getSimpleName(), strArray, strDup)) return;
             }
             else System.out.println("Algorithm \"" + algorithms.charAt(pos) + "\" is undefined.");
         }

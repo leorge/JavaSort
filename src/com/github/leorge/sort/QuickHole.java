@@ -4,14 +4,8 @@ package com.github.leorge.sort;
 public class QuickHole implements Algorithm {
     
     @Override
-    public String name() {
-        // TODO Auto-generated method stub
-        return this.getClass().getSimpleName();
-    }
-
-    @Override
-    public String description() {
-        return "simplest new quicksort with Hole";
+    public String toString() {
+        return "the simplest new quicksort with Hole";
     }
 
     @Override
@@ -22,10 +16,10 @@ public class QuickHole implements Algorithm {
     public void sort(Object[] a, int lo, int hi) {
         if (lo < hi) {
             @SuppressWarnings("unchecked")
-            Comparable<Object> pivot = (Comparable) a[hi];
+            Comparable<Object> pivot = (Comparable) a[hi];	// Save a pivot
             int lt = lo, gt = hi, hole = gt--;
             for (; lt < hole; lt++) {
-                if (pivot.compareTo(a[lt]) <= 0) {
+                if (pivot.compareTo(a[lt]) < 0) {
                     a[hole] = a[lt]; hole = lt;
                     for (; gt > hole; gt--) {
                         if (pivot.compareTo(a[gt]) > 0) {

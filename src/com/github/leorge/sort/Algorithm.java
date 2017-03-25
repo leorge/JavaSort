@@ -8,7 +8,5 @@ package com.github.leorge.sort;
  *
  */
 interface Algorithm {
-    String name();
-    String description();
     void sort(Object[] a);
 }

@@ -2,16 +2,9 @@ package com.github.leorge.sort;
 
 public class ArraysSort implements Algorithm {
 
-    private static final String myName = "QsortLib";
-    
+   
     @Override
-    public String name() {
-        // TODO Auto-generated method stub
-        return myName;
-    }
-
-    @Override
-    public String description() {
+    public String toString() {
         return "sort with a Library: java.util.Arrays.sort()";
     }
 
