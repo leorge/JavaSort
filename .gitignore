@@ -1,6 +1,6 @@
 bin/
-data
-JavaSort.ods
-*.jar
 tmp*
 *~
+data
+commons-math3-*.jar
+te-common.jar
