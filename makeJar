@@ -19,7 +19,8 @@
 #       java -jar JavaSort.jar -?
 #
 #
-rm -f JavaSort.jar
 pushd bin
-jar cvfm ../JavaSort.jar ../mani.fest com
+JAR=../JavaSort.jar
+if [ -f $JAR ]; then OPT=uvfm; else OPT=cvfm; fi
+jar $OPT $JAR ../manifest com
 popd

@@ -1,0 +1,26 @@
+#
+#   Download files to evaluate.
+#
+INSTALLER=inst_cmd; NULL=/dev/null
+
+# Setup applications.
+
+WEB="http://github.com/leorge/JavaSort"
+
+function guide () {
+    echo "Please setup $1."
+    echo "Visit the following URL and read the README.md below in the page."
+    echo "$WEB/$2" 
+}
+if ! which $INSTALLER > $NULL; then
+    guide scripts scripts
+    exit
+elif ! which random.awk > $NULL; then
+    guide "data generator" data
+    exit
+fi
+
+# Download products.
+
+wget -N $WEB/evaluate
+wget -N $WEB/JavaSort.jar
