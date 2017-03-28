@@ -1,5 +1,10 @@
 #!/bin/sh
-LANG=C
+LANG=en_US.UTF-8
+
+checkScripts || exit
+
+#----- Command analysis -----
+
 if [ $# -lt 1 ]; then
     echo "usage : $0  log2(N)  [repeat]"
     exit
@@ -10,8 +15,10 @@ if [ $# -gt 0 ]; then
     repeat=$1; shift
     if [ $repeat -le 0 ]; then repeat=1; fi
 fi
-rm -f tmp[1-9]*
 
+#----- measurement -----
+
+rm -f tmp[1-9]*
 sed -i -e '1,/^@/!d' $0     # Delete data part
 echo "start    : `date -u`" >> $0       # add date
 echo "computer : `uname -norpv`" >> $0
