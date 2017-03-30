@@ -1,8 +1,14 @@
 #!/bin/sh
 LANG=en_US.UTF-8
 
-checkScripts || exit
-checkJava || exit
+if which checkScripts > $NULL 2>&1; then
+    checkjava    || exit
+    checkScripts || exit
+    inst_cmd bc  || exit
+else
+    echo 'Please setup scripts in "https://github.com/leorge/scripts".'
+    exit
+fi
 
 #----- Command analysis -----
 
